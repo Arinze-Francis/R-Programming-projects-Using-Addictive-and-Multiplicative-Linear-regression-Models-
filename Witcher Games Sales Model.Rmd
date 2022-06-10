@@ -1,0 +1,231 @@
+---
+title: "Witcher Games sales Model"
+author: "Arinze Francis"
+date: '2022-06-09'
+output: html_document
+---
+
+# Witcher Video Games sales Model
+
+```{r, message=FALSE, echo=FALSE}
+rm(list=ls())
+options(scipen=999,digits=4)
+rm
+```
+
+
+# Load R packages
+
+```{r, message=FALSE, echo=FALSE}
+library('lmtest')
+library('lubridate')
+library('data.table')
+library('reshape2')
+library('dplyr')
+library('stringr')
+library('readxl')
+library('broom')
+library('carData')
+library('car')
+library('tidyr')
+library('ggplot2')
+library('nortest')
+library('tseries')
+library('equatiomatic')
+
+
+```
+
+
+# Import data
+
+```{r, message=FALSE, echo=FALSE}
+
+data <- read.csv("Witcher3VideoGamesSalesandAwards CS.csv")
+data
+
+```
+
+
+# Estimate linear additive model
+
+```{r}
+data_result <- lm(Units.sold..estimates. ~ Distribution.Channel + as.factor(Year), data = data )
+
+summary(data_result)
+
+hist(log(data$Units.sold..estimates.))
+```
+
+
+
+# Specify a multiplicative model
+
+
+```{r}
+
+data_result_11 <- lm(log(Units.sold..estimates.) ~ Distribution.Channel + as.factor(Year), data = data )
+
+summary(data_result_11)
+
+
+```
+
+# Conclusions and Managerial Implications
+The overall model is highly significant. 95.3% of the fluctuations of the units sold can be explained by the model. All Distribution Channel Methods had a significant effect on Unit sold (𝑝 < .05.) including the various years too. Witcher games sales benefited greatly from The Digital Distribution channel (5.31), followed by the PC channel (4.96) and the Europe Channel (4.86). Australia distribution Channel had the lowest contribution of 1.99. If Distribution Channel-Digital Distribution is increased by one percent, the units sold is to increase by 5.10 percent (holding all other variables constant) and etc.
+
+
+
+# Additional Insights
+
+```{r}
+tidy_result<-tidy(data_result_11)
+tidy_result
+
+
+# MULTICOLLINEARITY
+
+vif(data_result_11) 
+
+# Interpretation: From the GVIF,there is no multivariate problem as the explanatory variables were below 5.
+
+```
+
+# Model validation
+
+# Assumption 1: Outliers
+
+```{r}
+library(olsrr)
+data_result_11 %>% ols_plot_cooksd_chart() 
+
+# Interpretations: 1, 2 and 13 are outliers as they are above the 0.091 threshold
+
+
+```
+
+
+# Assumption 2: Normality
+
+```{r}
+
+data_result_11 %>% ols_test_normality()
+
+# Interpretation: Shapiro-Wilk test is below 0.05 meaning the data significantly deviate from a normal distribution.
+
+```
+
+# Assumption 3: Heteroskedasticity
+
+```{r}
+
+data_result_11 %>% ols_test_breusch_pagan()
+
+# Interpretation: the p-value is below an appropriate threshold (e.g. p < 0.05) therefore the null hypothesis of homoskedasticity is rejected and heteroskedasticity assumed.
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
