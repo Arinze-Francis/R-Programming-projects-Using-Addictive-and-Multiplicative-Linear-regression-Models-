@@ -1,0 +1,135 @@
+---
+title: "US Regional Sales"
+author: "Arinze Francis"
+date: '2022-06-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# US Regional sales Model
+
+
+```{r}
+rm(list=ls())
+options(scipen=999,digits=4)
+rm
+
+
+```
+
+# Load R packages
+ 
+```{r}
+library('lmtest')
+library('lubridate')
+library('data.table')
+library('reshape2')
+library('dplyr')
+library('stringr')
+library('readxl')
+library('broom')
+library('carData')
+library('car')
+library('tidyr')
+library('ggplot2')
+library('nortest')
+library('tseries')
+library('equatiomatic')
+```
+
+
+# Import data
+
+```{r}
+
+data <- read.csv("US Regional Sales Data Model.Rm")
+data
+
+```
+
+# Data Manipulations
+
+```{r}
+any(is.na(data))
+
+data <- data %>% mutate(Sales = data$`Unit Price` * data$`Order Quantity`) # to get my sales Price
+
+setnames(data, old = c('_ProductID','_StoreID'), new = c('Product_ID','Store_ID')) # Renaming of relevant multiple columns
+
+data_1 <- data %>% select(Sales, `Unit Price`, `Discount Applied`, `Sales Channel`, Product_ID, Store_ID ) # selection of relevant columns
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
